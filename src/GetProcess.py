@@ -13,8 +13,7 @@ def buscar_processo_por_nome(nome):
 
     return processos_encontrados
 
-
-if __name__ == "__main__":
+def iniciar():
     nome = input("Nome do processo: ")
     processos = buscar_processo_por_nome(nome)
     if processos:
@@ -24,3 +23,6 @@ if __name__ == "__main__":
         Presence.verifyFile(f"presets/{nome}.json")
     else:
         print(f"Nenhum processo encontrado com '{nome}'.")
+
+if __name__ == "__main__":
+    iniciar()
