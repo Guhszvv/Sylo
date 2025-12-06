@@ -14,15 +14,15 @@ def buscar_processo_por_nome(nome):
     return processos_encontrados
 
 def iniciar():
-    nome = input("Nome do processo: ")
+    nome = input("Process Name: ")
     processos = buscar_processo_por_nome(nome)
     if processos:
-        print(f"Processos encontrados para '{nome}':")
+        print(f"Processes found for '{nome}':")
         for p in processos:
             print(f"PID: {p['pid']} | Nome: {p['name']}")
         Presence.verifyFile(f"presets/{nome}.json")
     else:
-        print(f"Nenhum processo encontrado com '{nome}'.")
+        print(f"No process found with '{nome}'.")
 
 if __name__ == "__main__":
     iniciar()

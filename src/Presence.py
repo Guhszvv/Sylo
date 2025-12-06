@@ -3,7 +3,7 @@ import time
 import json
 import os
 
-path = "__file__/presets"
+path = "presets"
 start_time = time.time()
 
 def verifyFile(file):
@@ -18,7 +18,7 @@ def initPresence(file_path):
 
     ID = data.get("ID")
     if not ID:
-        print("ID do Discord não encontrado no arquivo JSON.")
+        print("Discord ID not found in JSON file..")
         return
 
     RPC = Presence(ID)
@@ -34,6 +34,6 @@ def initPresence(file_path):
             RPC.update(**update_data)
             time.sleep(15)
     except KeyboardInterrupt:
-        print("\nFinalizando Presence")
+        print("\nFinalizing Presence")
         RPC.clear()
         RPC.close()
