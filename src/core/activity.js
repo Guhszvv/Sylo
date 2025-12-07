@@ -1,18 +1,18 @@
 import IPC from "./ipc.js";
 import crypto from "node:crypto";
 import fs from "fs";
-import config from "../../config.json" with { type: "json" };
+import path from "path";
 
-const preset = JSON.parse(
-  fs.readFileSync(`presets/${config.PRESET}.json`, "utf8")
-);
 
-export default async function init_RPC() {
+export default async function init_RPC(preset) {
     await IPC.connect();
 
+    const presetPath = path.resolve(`presets/${preset}.json`);
+    const Preset = JSON.parse(fs.readFileSync(presetPath, "utf8"));
+
     IPC.sendPacket(1, {
-        "cmd": "SET_ACTIVITY",
-        "args": { "activity": preset},
-        "nonce": crypto.randomUUID()
+        cmd: "SET_ACTIVITY",
+        args: { activity: Preset },
+        nonce: crypto.randomUUID()
     });
 }

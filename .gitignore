@@ -3,3 +3,4 @@ __pycache__/
 presets/enfMain.json
 config.json
 /node_modules
+/presets

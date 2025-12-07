@@ -12,8 +12,8 @@ function getPresetChoices() {
     return jsonFiles.map(file => {
         const nome = path.basename(file, ".json");
         return {
-            name: nome,   // o que aparece pro usuário
-            value: nome   // o valor real usado no code
+            name: nome,
+            value: nome 
         };
     });
 }
@@ -33,27 +33,10 @@ export async function escolherPreset() {
     return preset;
 }
 
-function atualizarConfig(presetEscolhido) {
-    const configPath = "./config.json";
-
-    const conteudo = fs.readFileSync(configPath, "utf8");
-    const json = JSON.parse(conteudo);
-
-    json.PRESET = presetEscolhido;
-
-    fs.writeFileSync(configPath, JSON.stringify(json, null, 4));
-
-    console.log(`Config atualizado: PRESET = "${presetEscolhido}"`);
-}
-
 async function main() {
     const presetNome = await escolherPreset();
-    const presetPath = `presets/${presetNome}.json`;
 
-    atualizarConfig(presetNome);
-
-    // Aqui você pode iniciar a activity
-    init_RPC()
+    init_RPC(presetNome)
 }
 
 main();
