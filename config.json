@@ -1,0 +1,4 @@
+{
+    "SOCKET_PATH": "/run/user/ $your-id /discord-ipc-0",
+    "CLIENT_ID": "An app ID from Discord Developers Portal"
+}
