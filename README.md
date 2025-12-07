@@ -1,14 +1,11 @@
 <h1 align="center">SYLO</h1>
 
-<div align="center">
-    <a href="https://choosealicense.com/licenses/mit/">
-    <img src="https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20" alt="Sqlite"/>
-    </a>
-</div>
+Sylo is a **CLI Rich Presence for Discord**, using own IPC connection and JSON files.
 
-___
-
-Sylo is a CLI Rich Presence for Discord, using `pypresence` and json files.
+## How to Run
+1. Clone the repo: `git clone https://github.com/Guhszvv/Sylo`
+2. In Sylo folder Configure the `config.json` with your App ID and IPC Path
+3. Run `npm run activity`
 
 ## Wiki
 - [Creating Presets](presets/CreatingPresets.md)

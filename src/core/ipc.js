@@ -45,6 +45,21 @@ class DiscordIPC {
         });
     }
 
+    startHeartbeat() {
+    if (this.heartbeatInterval) return;
+
+    this.heartbeatInterval = setInterval(() => {
+        this.sendPacket(1, {}); // opcode 1 = PING
+        console.log("[Sylo-IPC] → PING enviado");
+    }, 15000);
+}
+    stopHeartbeat() {
+        if (this.heartbeatInterval) {
+            clearInterval(this.heartbeatInterval);
+            this.heartbeatInterval = null;
+        }
+    }
+
     // --- Função para lidar com frames recebidos ---
     handleFrame(buffer) {
         const op = buffer.readInt32LE(0);
@@ -55,9 +70,44 @@ class DiscordIPC {
 
         console.log("Frame recebido:", op, data);
 
-        if (data.cmd) {
-            this.emit(data.evt || data.cmd, data);
+        // Trata OPCODES primeiro
+        switch (op) {
+            case 0: // DISPATCH
+                this.handleDispatch(data);
+                break;
+
+            case 1: // HEARTBEAT (Discord pedindo ping)
+                console.log("[Sylo-IPC] ← Discord pediu HEARTBEAT");
+                this.sendPacket(1, {}); // Respondemos com PING vazio
+                break;
+
+            case 2: // FRAME
+                // normal activity updates etc
+                break;
+
+            case 3: // CLOSE
+                console.log("[Sylo-IPC] ← Discord enviou CLOSE");
+                this.socket.end();
+                break;
+
+            default:
+                console.log("[Sylo-IPC] Opcode desconhecido:", op);
+                break;
         }
+    }
+
+    handleDispatch(data) {
+        if (data.evt === "READY") {
+            console.log("[Sylo-IPC] READY recebido — iniciando heartbeat!");
+
+            this.startHeartbeat(); // ← ESSENCIAL
+
+            this.emit("READY", data);
+            return;
+        }
+
+        // Passa o evento pra quem estiver ouvindo
+        this.emit(data.evt || data.cmd, data);
     }
 
     // --- Envio de pacotes ---

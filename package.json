@@ -4,9 +4,12 @@
   "description": "<h1 align=\"center\">SYLO</h1>",
   "type": "module",
   "scripts": {
-    "activity": "node src/core/activity.js"
+    "init": "node src/app/menu.js"
   },
   "keywords": [],
   "author": "Guhszvv",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^12.11.1"
+  }
 }
